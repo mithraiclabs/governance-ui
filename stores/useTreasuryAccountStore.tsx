@@ -98,7 +98,6 @@ const useTreasuryAccountStore = create<TreasuryAccountStore>((set, _get) => ({
         }
       })
 
-      // Should we batch load the mint accounts?
       const mints = tokenAccounts.map((tAcct) => tAcct.mint)
       const mintInfos = await batchLoadMints(connection.current, mints)
       const tokenAccountsWithMints: TokenInfoWithMint[] = tokenAccounts.map(

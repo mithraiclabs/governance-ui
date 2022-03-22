@@ -36,6 +36,7 @@ import {
 import useMarketStore from 'Strategies/store/marketStore'
 import LoadingRows from './LoadingRows'
 import TokenAccounts from './TokenAccounts'
+import TradeOnSerum, { TradeOnSerumProps } from './TradeOnSerum'
 
 const AccountOverview = () => {
   const router = useRouter()
@@ -74,6 +75,10 @@ const AccountOverview = () => {
     genericSendTokenInfo,
     setGenericSendTokenInfo,
   ] = useState<GenericSendTokensProps | null>(null)
+  const [
+    tradeSerumInfo,
+    setTradeSerumInfo,
+  ] = useState<TradeOnSerumProps | null>(null)
   const [
     proposedInvestment,
     setProposedInvestment,
@@ -399,6 +404,17 @@ const AccountOverview = () => {
           isOpen={!!genericSendTokenInfo}
         >
           <GenericSendTokens {...genericSendTokenInfo} />
+        </Modal>
+      )}
+      {tradeSerumInfo && (
+        <Modal
+          sizeClassName="sm:max-w-3xl"
+          onClose={() => {
+            setTradeSerumInfo(null)
+          }}
+          isOpen={!!tradeSerumInfo}
+        >
+          <TradeOnSerum {...tradeSerumInfo} />
         </Modal>
       )}
     </>

@@ -1,4 +1,5 @@
 import Button from '@components/Button'
+import DropdownBtn, { DropdownBtnOptions } from '@components/DropdownBtn'
 import useGovernanceAssets from '@hooks/useGovernanceAssets'
 import { fmtTokenInfoWithMint } from '@tools/sdk/units'
 import React from 'react'
@@ -16,6 +17,25 @@ const TokenAccounts: React.FC<{
   const isLoadingTokenAccounts = useTreasuryAccountStore(
     (s) => s.isLoadingTokenAccounts
   )
+
+  // TODO: Determine if the token account has available Serum market data
+  //  before displaying. Actions should be specific to a token account.
+  const actionOptions: DropdownBtnOptions[] = [
+    {
+      isDefault: true,
+      label: 'Trade On Serum',
+      callback: async () => {
+        console.log('Open the Trade on Serum Modal!')
+      },
+    },
+    {
+      isDefault: false,
+      label: 'PsyFinance Deposit',
+      callback: async () => {
+        console.log('Open the PsyFinance Modal!')
+      },
+    },
+  ]
   return (
     <div>
       {isLoadingTokenAccounts ? (
@@ -27,7 +47,8 @@ const TokenAccounts: React.FC<{
             className="border border-fgd-4 default-transition flex items-center justify-between rounded-md p-4 text-sm text-th-fgd-1 mb-2"
           >
             <div>{fmtTokenInfoWithMint(tokenAccount)}</div>
-            <div>
+            <div className="flex">
+              <DropdownBtn options={actionOptions} isLoading={false} />
               <Button
                 tooltipMessage={
                   !canUseTransferInstruction
